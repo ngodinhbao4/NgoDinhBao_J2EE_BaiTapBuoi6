@@ -82,7 +82,7 @@ public class ProductController {
     }
 
     @GetMapping("/edit/{id}")
-    public String showEditForm(@PathVariable Long id, Model model) {
+    public String showEditForm(@PathVariable("id") Long id, Model model) {
         Product product = productService.findById(id);
         if (product == null) {
             return "redirect:/products";
@@ -93,7 +93,7 @@ public class ProductController {
     }
 
     @PostMapping("/edit/{id}")
-    public String updateProduct(@PathVariable Long id,
+    public String updateProduct(@PathVariable("id") Long id,
             @Valid @ModelAttribute("product") Product product,
             BindingResult result,
             @RequestParam(value = "image", required = false) MultipartFile imageFile,
@@ -139,7 +139,7 @@ public class ProductController {
     }
 
     @PostMapping("/delete/{id}")
-    public String deleteProduct(@PathVariable Long id) {
+    public String deleteProduct(@PathVariable("id") Long id) {
         productService.deleteById(id);
         return "redirect:/products";
     }

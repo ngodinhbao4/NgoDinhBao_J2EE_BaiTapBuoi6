@@ -1,5 +1,5 @@
 <!doctype html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
 <head>
   <title>Products Gallery</title>
@@ -14,7 +14,7 @@
       <div>
         <h2 class="fw-bold mb-0 text-dark">Products</h2>
       </div>
-      <a th:href="@{/products/create}" class="btn btn-custom btn-primary-custom d-flex align-items-center gap-2">
+      <a sec:authorize="hasRole('ADMIN')" th:href="@{/products/create}" class="btn btn-custom btn-primary-custom d-flex align-items-center gap-2">
         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-lg"
           viewBox="0 0 16 16">
           <path fill-rule="evenodd"
@@ -64,15 +64,19 @@
               </td>
               <td class="text-end pe-4">
                 <div class="d-flex gap-2 justify-content-end">
-                  <a th:href="@{'/products/edit/' + ${product.id}}" class="btn btn-sm btn-light border rounded-3 px-3">
+                  <a sec:authorize="hasRole('ADMIN')" th:href="@{'/products/edit/' + ${product.id}}" class="btn btn-sm btn-light border rounded-3 px-3">
                     Edit
                   </a>
-                  <form th:action="@{'/products/delete/' + ${product.id}}" method="post" style="display: inline">
+                  <form sec:authorize="hasRole('ADMIN')" th:action="@{'/products/delete/' + ${product.id}}" method="post" style="display: inline">
                     <button type="submit" class="btn btn-sm btn-outline-danger rounded-3 px-3"
                       onclick="return confirm('Are you sure you want to delete this product?');">
                       Delete
                     </button>
                   </form>
+                  <button sec:authorize="hasRole('USER')" type="button" class="btn btn-sm btn-success rounded-3 px-3"
+                    onclick="alert('Order functionality to be implemented!');">
+                    Order
+                  </button>
                 </div>
               </td>
             </tr>

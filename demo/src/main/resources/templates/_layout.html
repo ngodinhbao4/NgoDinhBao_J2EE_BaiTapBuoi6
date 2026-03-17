@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
 <head th:fragment="head">
     <meta charset="UTF-8">
@@ -167,9 +167,15 @@
                     </li>
                 </ul>
                 <div class="d-flex align-items-center gap-3">
-                    <form th:action="@{/logout}" method="post" class="m-0">
+                    <span sec:authorize="isAuthenticated()" class="text-white-50 fw-medium me-2">
+                        Hello, <strong class="text-white" sec:authentication="name">User</strong>
+                    </span>
+                    <form th:action="@{/logout}" method="post" class="m-0" sec:authorize="isAuthenticated()">
                         <button class="btn btn-danger rounded-pill px-4 fw-medium" type="submit">Logout</button>
                     </form>
+                    <a th:href="@{/login}"
+                        class="btn btn-primary-custom rounded-pill px-4 fw-medium text-decoration-none"
+                        sec:authorize="!isAuthenticated()">Login</a>
                 </div>
             </div>
         </div>
@@ -177,7 +183,7 @@
 
     <footer class="footer-custom text-center py-4 mt-auto" th:fragment="footer">
         <div class="container">
-            <p class="mb-0">&copy; 2025 - Phát triển ứng dụng với J2EE. Crafted with ❤️</p>
+            <p class="mb-0">&copy; 2025 - Phát triển ứng dụng với J2EE.</p>
         </div>
     </footer>
 
